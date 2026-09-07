@@ -1,0 +1,9 @@
+{
+  "id": "obsidian-bridge",
+  "name": "Obsidian Bridge",
+  "version": "0.2.1",
+  "minAppVersion": "1.5.0",
+  "description": "Securely connect an Obsidian vault to authorized remote clients through an outbound bridge.",
+  "author": "Ahmad",
+  "isDesktopOnly": false
+}
