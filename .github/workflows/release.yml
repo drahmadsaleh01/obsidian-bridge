@@ -1,0 +1,47 @@
+name: Build Obsidian Bridge release
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'manifest.json'
+      - 'styles.css'
+      - 'release-src/**'
+      - '.github/workflows/release.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Rebuild and verify main.js
+        run: |
+          cat release-src/main.js.b64.part* | tr -d '\n\r ' | base64 -d > main.js
+          echo '9867e4b59e1343d8cf187d5af84c26ffe6c0e2d4fb3e6f232161f250097c639c  main.js' | sha256sum -c -
+
+      - name: Read plugin version
+        id: version
+        run: |
+          VERSION=$(node -p "require('./manifest.json').version")
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Create or refresh GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION='${{ steps.version.outputs.version }}'
+          if gh release view "$VERSION" >/dev/null 2>&1; then
+            gh release upload "$VERSION" main.js manifest.json styles.css --clobber
+          else
+            gh release create "$VERSION" main.js manifest.json styles.css \
+              --title "$VERSION" \
+              --prerelease \
+              --target "$GITHUB_SHA" \
+              --notes "Obsidian Bridge beta $VERSION"
+          fi
