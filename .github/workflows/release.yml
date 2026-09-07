@@ -20,6 +20,22 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
+      - name: Verify uploaded chunks
+        run: |
+          cat > /tmp/chunks.sha256 <<'EOF'
+          92751b2e98d0cf634c675e7bb1e321a706d17dc9bfe791e5ff9825c45ba4b4d9  release-src/main.js.b64.part00
+          37f62968661e73858082397423b8a177f81472b87f7b49c633b09ac84d3abf91  release-src/main.js.b64.part01
+          7170589a86f02b7cd864f4034d7029946da001c38660bae7594ba02e9e6730a3  release-src/main.js.b64.part02
+          ee907dd418249b0a73387733b81b3146b1c43bfdb9e5aa31c3cd329150f90d76  release-src/main.js.b64.part03
+          b34ec9b4e1b1083a9346ab12eba1ec1b1ba764600f02c01ebfbdc27766e76f8b  release-src/main.js.b64.part04
+          aa445146ec422bd7218c48d31aa9758121f1c35b374ccbcc1462fd3cf5b05191  release-src/main.js.b64.part05
+          2e91b1326845bdd26cf0f9e1c6b01704d6a40f1266957a33d1362bd712ba32ee  release-src/main.js.b64.part06
+          3323f89fc92e2eceb933d1676c5e04257a74d757227c9dc5939d21a2dce295d4  release-src/main.js.b64.part07
+          674a4fdd1ba5952082a171b91366a9267794ec37df2b433390b2a9e9d43d21cf  release-src/main.js.b64.part08
+          7f8918ba6d8acceb05a637a0d54855771c5b50d6315f6fad83ff17c38f792526  release-src/main.js.b64.part09
+          EOF
+          sha256sum -c /tmp/chunks.sha256
+
       - name: Rebuild and verify main.js
         run: |
           cat release-src/main.js.b64.part* | tr -d '\n\r ' | base64 -d > main.js
