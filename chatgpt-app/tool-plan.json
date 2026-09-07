@@ -1,0 +1,56 @@
+{
+  "app": "Obsidian Bridge",
+  "version": "0.3.0-draft",
+  "tools": [
+    {
+      "name": "search_notes",
+      "scope": "vault.search",
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    },
+    {
+      "name": "read_note",
+      "scope": "note.read",
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    },
+    {
+      "name": "operation_status",
+      "scope": "operation.read",
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    },
+    {
+      "name": "create_note",
+      "scope": "note.create",
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "openWorldHint": false
+    },
+    {
+      "name": "update_note",
+      "scope": "note.edit",
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "openWorldHint": false
+    },
+    {
+      "name": "move_note",
+      "scope": "note.move",
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "openWorldHint": false
+    },
+    {
+      "name": "set_property",
+      "scope": "metadata.write",
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  ],
+  "v1_exclusions": ["delete_note", "bulk_delete", "vault_wipe"]
+}
